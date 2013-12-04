@@ -27,25 +27,20 @@ def visualize(scores, faces):
 faces = sp.genfromtxt('faces.csv', delimiter=',')
 
 # Example for displaying the first face, which may help you how the data set presents
-plt.imshow(faces[0, :].reshape(64, 64).T, cmap=plt.cm.gray)
-plt.show()
+#plt.imshow(faces[0, :].reshape(64, 64).T, cmap=plt.cm.gray)
+#plt.show()
 
 
 # Your code starts from here ....
+
+# a. Randomly display a face
+# STUDENT CODE TODO
 import time
-from copy import deepcopy
-
-# a. Randomly display a face
-# STUDENT CODE TODO
 import random
-t0 = time.time()
-ran = random.randint(0,len(faces))
-print "(a) Random Face Index: " + str(ran)
-plt.imshow(faces[ran, :].reshape(64,64).T, cmap=plt.cm.gray)
+start = time.time()
+randIndex = random.randint(0,len(faces))
+plt.imshow(faces[randIndex,:].reshape(64,64).T, cmap=plt.cm.gray)
 plt.show()
-
-# a. Randomly display a face
-# STUDENT CODE TODO
 
 # b. Compute and display the mean face
 # STUDENT CODE TODO
