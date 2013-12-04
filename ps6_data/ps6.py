@@ -32,18 +32,24 @@ faces = sp.genfromtxt('faces.csv', delimiter=',')
 
 
 # Your code starts from here ....
-
-# a. Randomly display a face
-# STUDENT CODE TODO
 import time
+# a. Randomly display a face
 import random
-start = time.time()
 randIndex = random.randint(0,len(faces))
 plt.imshow(faces[randIndex,:].reshape(64,64).T, cmap=plt.cm.gray)
 plt.show()
 
 # b. Compute and display the mean face
-# STUDENT CODE TODO
+mean = [0.0] * len(faces[0])
+for image in faces:
+  for featureIndex,val in enumerate(image):
+    mean[featureIndex] += float(val)
+
+for ind,meanValue in enumerate(mean):
+  mean[ind] = float(meanValue) / float(len(faces))
+
+plt.imshow(np.matrix(mean).reshape(64,64).T, cmap=plt.cm.gray)
+plt.show()
 
 # c. Centralize the faces by substracting the mean
 # STUDENT CODE TODO
