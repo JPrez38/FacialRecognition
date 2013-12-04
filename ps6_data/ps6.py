@@ -32,6 +32,17 @@ plt.show()
 
 
 # Your code starts from here ....
+import time
+from copy import deepcopy
+
+# a. Randomly display a face
+# STUDENT CODE TODO
+import random
+t0 = time.time()
+ran = random.randint(0,len(faces))
+print "(a) Random Face Index: " + str(ran)
+plt.imshow(faces[ran, :].reshape(64,64).T, cmap=plt.cm.gray)
+plt.show()
 
 # a. Randomly display a face
 # STUDENT CODE TODO
