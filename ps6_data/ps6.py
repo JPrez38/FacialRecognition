@@ -65,10 +65,22 @@ U, S, V = linalg.svd(newFaces)
 # e. Show the first 10 priciple components
 for i in range(0,10):
   plt.imshow(V[i,:].reshape(64,64).T, cmap=plt.cm.gray)
-  plt.show()
+  #plt.show()
 
 # f. Visualize the data by using first 2 principal components using the function "visualize"
-# STUDENT CODE TODO
+scores = [[]] * 30
+visFaces = np.matrix([[0] * 4096] * 30)
+
+for i in range(30):
+  ran = random.randint(0,len(faces)-1)
+  visFaces[i, :] = faces[ran, :]
+  score = np.dot(newFaces[ran],V[0:2,:].T)
+  # score0 = np.dot(facesCentered[ran],Vh[0,:])
+  # score1 = np.dot(facesCentered[ran],Vh[1,:])
+
+  scores[i] = score
+
+visualize(scores,visFaces)
 
 # g. Plot the proportion of variance explained
 # STUDENT CODE TODO
