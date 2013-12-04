@@ -63,7 +63,9 @@ U, S, V = linalg.svd(newFaces)
 
 
 # e. Show the first 10 priciple components
-# STUDENT CODE TODO
+for i in range(0,10):
+  plt.imshow(V[i,:].reshape(64,64).T, cmap=plt.cm.gray)
+  plt.show()
 
 # f. Visualize the data by using first 2 principal components using the function "visualize"
 # STUDENT CODE TODO
