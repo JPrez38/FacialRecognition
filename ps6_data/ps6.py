@@ -1,6 +1,6 @@
 import numpy as np
 import scipy as sp
-import scipy.linalg
+import scipy.linalg as linalg
 import matplotlib.pyplot as plt
 import matplotlib.offsetbox as offsetbox
 
@@ -33,11 +33,12 @@ faces = sp.genfromtxt('faces.csv', delimiter=',')
 
 # Your code starts from here ....
 import time
+import copy
 # a. Randomly display a face
 import random
 randIndex = random.randint(0,len(faces))
 plt.imshow(faces[randIndex,:].reshape(64,64).T, cmap=plt.cm.gray)
-plt.show()
+#plt.show()
 
 # b. Compute and display the mean face
 mean = [0.0] * len(faces[0])
@@ -49,13 +50,17 @@ for ind,meanValue in enumerate(mean):
   mean[ind] = float(meanValue) / float(len(faces))
 
 plt.imshow(np.matrix(mean).reshape(64,64).T, cmap=plt.cm.gray)
-plt.show()
+#plt.show()
 
 # c. Centralize the faces by substracting the mean
-# STUDENT CODE TODO
+newFaces = copy.deepcopy(faces)
+
+for index,face in enumerate(newFaces):
+  newFaces[index] = [faceVal - meanVal for faceVal,meanVal in zip(face,mean)]
 
 # d. Perform SVD (you may find scipy.linalg.svd useful)
-# STUDENT CODE TODO
+U, S, V = linalg.svd(newFaces)
+
 
 # e. Show the first 10 priciple components
 # STUDENT CODE TODO
