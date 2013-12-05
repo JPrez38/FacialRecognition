@@ -60,7 +60,7 @@ for index,face in enumerate(newFaces):
 
 # d. Perform SVD (you may find scipy.linalg.svd useful)
 U, S, V = linalg.svd(newFaces)
-
+W = U * S
 
 # e. Show the first 10 priciple components
 for i in range(0,10):
@@ -69,24 +69,38 @@ for i in range(0,10):
 
 # f. Visualize the data by using first 2 principal components using the function "visualize"
 scores = [[]] * 30
-visFaces = np.matrix([[0] * 4096] * 30)
+visualizedFaces = np.matrix([[0] * 4096] * 30)
 
 for i in range(30):
-  ran = random.randint(0,len(faces)-1)
-  visFaces[i, :] = faces[ran, :]
-  score = np.dot(newFaces[ran],V[0:2,:].T)
-  # score0 = np.dot(facesCentered[ran],Vh[0,:])
-  # score1 = np.dot(facesCentered[ran],Vh[1,:])
+  rand = random.randint(0,len(faces)-1)
+  visualizedFaces[i, :] = faces[rand, :]
+  scores[i] = np.dot(newFaces[rand],V[0:2,:].T)
 
-  scores[i] = score
-
-visualize(scores,visFaces)
+#visualize(scores,visFaces)
 
 # g. Plot the proportion of variance explained
-# STUDENT CODE TODO
+sumLambda = 0
+propVarianceExplained = []
+for i in range(0,len(S)):
+  sumLambda += S[i]
+for i in range(0,10): 
+  propVarianceExplained.append((S[i])/sumLambda)
+plt.figure(figsize=(8,6), dpi=80)
+plt.plot(np.arange(1,11), propVarianceExplained, color="blue")
+#plt.show()
 
 # h. Face reconstruction using 5, 10, 25, 50, 100, 200, 300, 399 principal components
-# STUDENT CODE TODO
+componentSizes = [5,10,25,50,100,200,300,399]
+
+rand = random.randint(0,len(faces)-1)
+
+for componentSize in componentSizes:
+  reconstruct = copy.deepcopy(mean)
+  for k in range(0,componentSize):
+    reconstruct += V[k,:] * W[rand,k]
+
+  plt.imshow(np.matrix(reconstruct).reshape(64,64).T, cmap=plt.cm.gray)
+  plt.show()
 
 # i. Plot the reconstruction error for k = 5, 10, 25, 50, 100, 200, 300, 399 principal components
 #    and the sum of the squares of the last n-k (singular values)
