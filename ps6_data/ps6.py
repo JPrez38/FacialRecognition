@@ -32,13 +32,12 @@ faces = sp.genfromtxt('faces.csv', delimiter=',')
 
 
 # Your code starts from here ....
-import time
 import copy
-# a. Randomly display a face
 import random
+# a. Randomly display a face
 randIndex = random.randint(0,len(faces))
 plt.imshow(faces[randIndex,:].reshape(64,64).T, cmap=plt.cm.gray)
-#plt.show()
+plt.show()
 
 # b. Compute and display the mean face
 mean = [0.0] * len(faces[0])
@@ -50,13 +49,14 @@ for ind,meanValue in enumerate(mean):
   mean[ind] = float(meanValue) / float(len(faces))
 
 plt.imshow(np.matrix(mean).reshape(64,64).T, cmap=plt.cm.gray)
-#plt.show()
+plt.show()
 
 # c. Centralize the faces by substracting the mean
 newFaces = copy.deepcopy(faces)
 
-for index,face in enumerate(newFaces):
-  newFaces[index] = [faceVal - meanVal for faceVal,meanVal in zip(face,mean)]
+for i,face in enumerate(newFaces):
+  for j,faceVal in enumerate(face):
+    newFaces[i][j] = faceVal - mean[j]
 
 # d. Perform SVD (you may find scipy.linalg.svd useful)
 U, S, V = linalg.svd(newFaces)
@@ -65,7 +65,7 @@ W = U * S
 # e. Show the first 10 priciple components
 for i in range(0,10):
   plt.imshow(V[i,:].reshape(64,64).T, cmap=plt.cm.gray)
-  #plt.show()
+  plt.show()
 
 # f. Visualize the data by using first 2 principal components using the function "visualize"
 scores = [[]] * 30
@@ -76,7 +76,7 @@ for i in range(30):
   visualizedFaces[i, :] = faces[rand, :]
   scores[i] = np.dot(newFaces[rand],V[0:2,:].T)
 
-#visualize(scores,visFaces)
+visualize(scores,visualizedFaces)
 
 # g. Plot the proportion of variance explained
 sumLambda = 0
@@ -87,7 +87,7 @@ for i in range(0,10):
   propVarianceExplained.append((S[i])/sumLambda)
 plt.figure(figsize=(8,6), dpi=80)
 plt.plot(np.arange(1,11), propVarianceExplained, color="blue")
-#plt.show()
+plt.show()
 
 # h. Face reconstruction using 5, 10, 25, 50, 100, 200, 300, 399 principal components
 componentSizes = [5,10,25,50,100,200,300,399]
